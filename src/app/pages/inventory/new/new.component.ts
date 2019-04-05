@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { InventoryService } from '../shared/inventory.service';
+import { Item } from '../shared/models/item';
 
 @Component({
   selector: 'ngx-new',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service:InventoryService) { }
 
   ngOnInit() {
   }
 
+  onSubmit(event){
+    let item:Item;
+    let result = this.service.saveItem(item);
+    alert(' added '+result);
+
+  }
 }

@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { of } from 'rxjs';
+import { Item } from './models/item';
 
 @Injectable({
   providedIn: 'root'
@@ -32,4 +34,15 @@ export class InventoryService {
  };
 
   constructor() { }
+
+  getAllItems(): Item[]{
+    
+    return this.data;
+  
+  }
+
+  saveItem(item:Item): string{
+      
+    return 'success';
+  } 
 }

@@ -21,6 +21,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ]
   },
 
+  /*
   {
     title: 'FEATURES',
     group: true,
@@ -268,4 +269,5 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
+  */
 ];

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { Item } from './models/item';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -33,12 +34,16 @@ export class InventoryService {
   return this.data
  };
 
-  constructor() { }
+  apiBase = 'https://invmansl.herokuapp.com';
 
-  getAllItems(): Item[]{
-    
-    return this.data;
-  
+  constructor(private http:HttpClient) { }
+
+  getAllItems(): Observable<Item[]>{
+    var data = {
+    };
+
+    return this.http.get<Item[]>(this.apiBase+'/inventory/items',data);
+
   }
 
   saveItem(item:Item): string{

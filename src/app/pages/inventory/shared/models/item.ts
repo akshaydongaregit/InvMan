@@ -5,6 +5,6 @@ export class Item {
     quantity : number;
     unit: string ;
     price: number ;
-    desc : string ;
+    descp : string ;
     category: string 
 }

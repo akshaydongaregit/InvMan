@@ -53,11 +53,16 @@ export class ListComponent implements OnInit {
     },
   };
 
-  source: LocalDataSource = new LocalDataSource();
+   source: LocalDataSource = new LocalDataSource();
 
+   list ;
   constructor(private service: InventoryService) {
-    const data = this.service.getData();
-    this.source.load(data);
+    const data = this.service.getAllItems();
+    data.subscribe(function(res){
+      console.log(res);
+      this.source.load(res);
+    });
+    
   }
 
   ngOnInit() {

@@ -41,13 +41,23 @@ export class InventoryService {
   getAllItems(): Observable<Item[]>{
     var data = {
     };
-
     return this.http.get<Item[]>(this.apiBase+'/inventory/items',data);
-
   }
 
-  saveItem(item:Item): string{
-      
-    return 'success';
+  saveItem(item:Item): Observable<any>{
+
+    var data = {
+        id : item.id ,
+       name:  item.name,
+       code: item.code ,
+       unit: item.unit ,
+       quantity: item.quantity,
+       price: item.price,
+       descp: item.descp ,
+       category: item.category
+    };
+
+    //console.log(JSON.stringify(item));
+    return this.http.post<any>(this.apiBase+'/inventory/add',data);
   } 
 }

@@ -53,15 +53,41 @@ export class ListComponent implements OnInit {
     },
   };
 
-   source: LocalDataSource = new LocalDataSource();
+   source: LocalDataSource ;
 
-   list ;
+   list = [{
+    id: 1 ,
+    name: 'Wheet' ,
+    code : 'P1' ,
+    quantity :  12,
+    unit: '' ,
+    price: 12 ,
+    desc : '' ,
+    category: ''    
+  },
+  {
+    id: 2 ,
+    name: 'Wheet' ,
+    code : 'P1' ,
+    quantity :  12,
+    unit: '' ,
+    price: 12 ,
+    desc : '' ,
+    category: ''    
+  }
+
+] ;
   constructor(private service: InventoryService) {
     const data = this.service.getAllItems();
-    data.subscribe(function(res){
-      console.log(res);
+    this.source = new LocalDataSource();
+    data.subscribe({
+      next: res => {
       this.source.load(res);
-    });
+    } ,
+    error:err=>{
+      console.log(err);
+    }
+  });
     
   }
 

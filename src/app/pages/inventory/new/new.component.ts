@@ -9,15 +9,33 @@ import { Item } from '../shared/models/item';
 })
 export class NewComponent implements OnInit {
 
-  constructor(private service:InventoryService) { }
+  item:Item;
+
+  constructor(private service:InventoryService) {
+    this.item = {
+      name:'' ,
+      id: '0',
+      code: 'P010',
+      price: "0",
+      unit: 'None',
+      quantity: '0',
+      descp: 'None',
+      category: 'None' 
+    };
+   }
 
   ngOnInit() {
   }
 
   onSubmit(event){
-    let item:Item;
-    let result = this.service.saveItem(item);
-    alert(' added '+result);
+   
+    let result = this.service.saveItem(this.item);
+    result.subscribe( data => {
+    alert(' added '+JSON.stringify(data));
+    } ,
+    err => {
+      alert(JSON.stringify(err));
+    });
 
   }
 }

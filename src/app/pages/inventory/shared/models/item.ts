@@ -1,10 +1,10 @@
 export class Item {
-    id: number ;
+    id: string ;
     name: string ;
     code : string ;
-    quantity : number;
+    quantity : string;
     unit: string ;
-    price: number ;
+    price: string ;
     descp : string ;
     category: string 
 }

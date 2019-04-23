@@ -135,6 +135,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ListComponent = /** @class */ (function () {
     function ListComponent(service) {
+        var _this = this;
         this.service = service;
         this.settings = {
             add: {
@@ -178,9 +179,37 @@ var ListComponent = /** @class */ (function () {
                 },
             },
         };
+        this.list = [{
+                id: 1,
+                name: 'Wheet',
+                code: 'P1',
+                quantity: 12,
+                unit: '',
+                price: 12,
+                desc: '',
+                category: ''
+            },
+            {
+                id: 2,
+                name: 'Wheet',
+                code: 'P1',
+                quantity: 12,
+                unit: '',
+                price: 12,
+                desc: '',
+                category: ''
+            }
+        ];
+        var data = this.service.getAllItems();
         this.source = new ng2_smart_table__WEBPACK_IMPORTED_MODULE_2__["LocalDataSource"]();
-        var data = this.service.getData();
-        this.source.load(data);
+        data.subscribe({
+            next: function (res) {
+                _this.source.load(res);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
     }
     ListComponent.prototype.ngOnInit = function () {
     };
@@ -214,7 +243,7 @@ var ListComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nb-card>\n  <nb-card-header>Add New Item</nb-card-header>\n  <nb-card-body>\n    <form>\n      <div class=\"form-group\">\n        <label for=\"\">Item Name </label>\n        <input type=\"text\" class=\"form-control\" id=\"exampleInputEmail1\" placeholder=\" \">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"\">Code</label>\n        <input type=\"text\" class=\"form-control\" id=\"exampleInputPassword1\" placeholder=\"\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"\">Quantity</label>\n        <input type=\"text\" class=\"form-control\" id=\"exampleInputPassword1\" placeholder=\"\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"\">Unit</label>\n        <input type=\"text\" class=\"form-control\" id=\"exampleInputPassword1\" placeholder=\"\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"\">Price</label>\n        <input type=\"text\" class=\"form-control\" id=\"exampleInputPassword1\" placeholder=\"\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"\">Description</label>\n        <input type=\"text\" class=\"form-control\" id=\"exampleInputPassword1\" placeholder=\"\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"\">Category</label>\n        <input type=\"text\" class=\"form-control\" id=\"exampleInputPassword1\" placeholder=\"\">\n      </div>\n\n      <button type=\"submit\" class=\"btn btn-info\" (click)=\"onSubmit($event)\" >Submit</button>\n    </form>\n  </nb-card-body>\n</nb-card>"
+module.exports = "<nb-card>\n  <nb-card-header>Add New Item</nb-card-header>\n  <nb-card-body>\n    <form>\n      <div class=\"form-group\">\n        <label for=\"\">Item Name </label>\n        <input type=\"text\" class=\"form-control\" [(ngModel)]=\"item.name\" name=\"name\" id=\"name\" placeholder=\" \">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"\">Code</label>\n        <input type=\"text\" class=\"form-control\" [(ngModel)]=\"item.code\" name=\"code\" id=\"code\" placeholder=\"\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"\">Quantity</label>\n        <input type=\"text\" class=\"form-control\" [(ngModel)]=\"item.quantity\" name=\"quantity\" id=\"quantity\" placeholder=\"\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"\">Unit</label>\n        <input type=\"text\" class=\"form-control\" [(ngModel)]=\"item.unit\" name=\"unit\" id=\"unit\" placeholder=\"\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"\">Price</label>\n        <input type=\"text\" class=\"form-control\" [(ngModel)]=\"item.price\" name=\"price\" id=\"price\" placeholder=\"\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"\">Description</label>\n        <input type=\"text\" class=\"form-control\" [(ngModel)]=\"item.descp\" name=\"descp\" id=\"descp\" placeholder=\"\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"\">Category</label>\n        <input type=\"text\" class=\"form-control\" [(ngModel)]=\"item.category\" name=\"category\" id=\"category\" placeholder=\"\">\n      </div>\n\n      <button type=\"submit\" class=\"btn btn-info\" (click)=\"onSubmit($event)\" >Submit</button>\n    </form>\n  </nb-card-body>\n</nb-card>"
 
 /***/ }),
 
@@ -248,13 +277,26 @@ __webpack_require__.r(__webpack_exports__);
 var NewComponent = /** @class */ (function () {
     function NewComponent(service) {
         this.service = service;
+        this.item = {
+            name: '',
+            id: '0',
+            code: 'P010',
+            price: "0",
+            unit: 'None',
+            quantity: '0',
+            descp: 'None',
+            category: 'None'
+        };
     }
     NewComponent.prototype.ngOnInit = function () {
     };
     NewComponent.prototype.onSubmit = function (event) {
-        var item;
-        var result = this.service.saveItem(item);
-        alert(' added ' + result);
+        var result = this.service.saveItem(this.item);
+        result.subscribe(function (data) {
+            alert(' added ' + JSON.stringify(data));
+        }, function (err) {
+            alert(JSON.stringify(err));
+        });
     };
     NewComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -283,10 +325,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InventoryService", function() { return InventoryService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+
 
 
 var InventoryService = /** @class */ (function () {
-    function InventoryService() {
+    function InventoryService(http) {
+        this.http = http;
         this.data = [{
                 id: 1,
                 name: 'Wheet',
@@ -308,22 +353,35 @@ var InventoryService = /** @class */ (function () {
                 category: ''
             }
         ];
+        this.apiBase = 'https://invmansl.herokuapp.com';
     }
     InventoryService.prototype.getData = function () {
         return this.data;
     };
     ;
     InventoryService.prototype.getAllItems = function () {
-        return this.data;
+        var data = {};
+        return this.http.get(this.apiBase + '/inventory/items', data);
     };
     InventoryService.prototype.saveItem = function (item) {
-        return 'success';
+        var data = {
+            id: item.id,
+            name: item.name,
+            code: item.code,
+            unit: item.unit,
+            quantity: item.quantity,
+            price: item.price,
+            descp: item.descp,
+            category: item.category
+        };
+        //console.log(JSON.stringify(item));
+        return this.http.post(this.apiBase + '/inventory/add', data);
     };
     InventoryService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
             providedIn: 'root'
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
     ], InventoryService);
     return InventoryService;
 }());
